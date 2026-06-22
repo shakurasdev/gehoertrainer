@@ -12,6 +12,8 @@ class Spiellogik {
     private var correct = 0
     private var falseCount = 0
 
+    private val tonShift = 57 //entspricht A3 als byte Grundton
+
     private var currentInterval: List<Int>
 
     private val settings: SettingsModel
@@ -23,21 +25,35 @@ class Spiellogik {
 
     /**
      * erzeugt die numerischen Werte des nächsten Intervalls zum Abspielen
+     * der wert 0 entspricht dem grundton, der für das Abspielen vorgesehen ist
+     * also enthält die Liste jeweils die abstände von diesem grundton
      *
+     * @return sortierte Liste, elem(0) ist der grundton
      */
     fun newInterval(): List<Int> {
-        //A3 entspricht 57 als byte für MidiManager
-        val grundton = 57 + (if(!settings.grundtonVariabel) 0 else Random.nextInt(-11, 12))
+        val grundton = (if(!settings.grundtonVariabel) 0 else Random.nextInt(-11, 12))
         val allPossibleValues = (settings.intervalMin + grundton..settings.intervalMax + grundton).toList()
         val randomUniqueValues = allPossibleValues.shuffled().take(settings.polyphony - 1)
-        return randomUniqueValues.sorted()
+        return listOf(grundton) + randomUniqueValues.sorted()
     }
 
-    fun abspielen() {
-
-        // später implementieren
+    /**
+     * liefert die numerischen Werte des aktuellen intervalls einschließlich grundton an erster stelle,
+     * erhöht um this.tonShift für Midi Abspielen
+     */
+    fun getCurrentMidiNotes(): List<Int> {
+        return currentInterval.map { it + tonShift }
     }
 
+    /**
+     * bewertet die gegebenen intervalle
+     * wenn alle korrekt sind, wird this.correct erhöht, sonst this.falseCount erhöht
+     * abschließend werden die nächsten intervalle erzeugt
+     *
+     * wenn correct + falseCount == settings.rounds passiert nichts
+     *
+     * @throws IllegalArgumentException wenn intervals.size ungültig oder die geratenen werte nicht innerhalb intervalMin und intervalMax sind
+     */
     fun raten(intervals: List<Int>) {
         if(intervals.size != settings.polyphony - 1)
             throw IllegalArgumentException("intervall.size muss polyphony-1 sein")
@@ -46,10 +62,17 @@ class Spiellogik {
         if (intervals.any { it !in min..max }) {
             throw IllegalArgumentException("Intervalle müssen zwischen $min und $max liegen")
         }
+        if(correct + falseCount == settings.rounds) {
+            return
+        }
 
-        // später implementieren
+        val ohneGrundton = currentInterval.drop(1)
 
-        correct++
+        if(intervals.sorted() == ohneGrundton.sorted()) {
+            correct++
+        } else {
+            falseCount++
+        }
 
         currentInterval = newInterval()
     }
@@ -62,7 +85,7 @@ class Spiellogik {
         return falseCount
     }
 
-    fun getEndergebnis(): SpielergebnisModel {
+    fun getEndergebnis(installationId: String): SpielergebnisModel {
         return SpielergebnisModel(
             settings.id,
             settings.rounds,
@@ -70,7 +93,7 @@ class Spiellogik {
             settings.intervalMin,
             settings.intervalMax,
             settings.polyphony,
-            "TODO",
+            installationId,
             correct
             )
     }

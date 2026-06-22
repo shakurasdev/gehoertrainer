@@ -2,6 +2,7 @@ package com.example.a26ss_gehoertrainer.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a26ss_gehoertrainer.data.PreferencesManager
@@ -63,13 +64,22 @@ class SettingsActivity : AppCompatActivity() {
                 polyphony = binding.sliderPolyphony.value.toInt()
             )
 
-            prefs.saveSettings(newSettings)
+            if(newSettings.polyphony > newSettings.intervalMax - newSettings.intervalMin) {
+                Toast.makeText(
+                    this,
+                    "zu wenig verfügbare Töne für die Polyphonie",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                prefs.saveSettings(newSettings)
 
-            startActivity(
-                Intent(this, GuessActivity::class.java)
-            )
+                startActivity(
+                    Intent(this, GuessActivity::class.java)
+                )
 
-            finish()
+                finish()
+            }
+
         }
 
         //android back button

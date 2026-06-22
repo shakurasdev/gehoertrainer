@@ -28,7 +28,12 @@ class HighscoreActivity : AppCompatActivity() {
             SpielergebnisModel(
                 settings.id,
                 settings.rounds,
-                settings.baseTone
+                settings.grundtonVariabel,
+                settings.intervalMin,
+                settings.intervalMax,
+                settings.polyphony,
+                "TODO",
+                0
             )
         )
 

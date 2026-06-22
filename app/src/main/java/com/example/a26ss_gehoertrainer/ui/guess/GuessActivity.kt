@@ -1,16 +1,24 @@
 package com.example.a26ss_gehoertrainer.ui.guess
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.a26ss_gehoertrainer.data.PreferencesManager
 import com.example.a26ss_gehoertrainer.databinding.ActivityGuessBinding
-import com.example.a26ss_gehoertrainer.ui.main.MainActivity
+import com.example.a26ss_gehoertrainer.logic.Spiellogik
+import com.google.android.material.slider.Slider
 
 class GuessActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGuessBinding
+
+    private lateinit var spiellogik: Spiellogik
+
+    private val sliders = mutableListOf<Slider>()
+
+    private var currentRound = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,21 +26,87 @@ class GuessActivity : AppCompatActivity() {
         binding = ActivityGuessBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        val settings =
+            PreferencesManager(this).loadSettings()
 
-            val intent =
-                Intent(this, MainActivity::class.java)
+        spiellogik = Spiellogik(settings)
 
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+        binding.tvRound.text =
+            "Runde $currentRound/${settings.rounds}"
 
-            startActivity(intent)
+        createSliders(
+            settings.polyphony,
+            settings.intervalMin,
+            settings.intervalMax
+        )
 
-        }, 5000)
+        binding.imgLogo.setOnClickListener {
+
+            spiellogik.abspielen()
+        }
+
+        binding.btnConfirm.setOnClickListener {
+
+            val values =
+                sliders.map { it.value.toInt() }
+
+            spiellogik.raten(values)
+
+            binding.tvCorrect.text =
+                "Correct: ${spiellogik.getC()}"
+
+            binding.tvFalse.text =
+                "False: ${spiellogik.getF()}"
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+        }
     }
 
-    override fun onBackPressed() {
-        // deaktiviert
+    private fun createSliders(
+        count: Int,
+        min: Int,
+        max: Int
+    ) {
+
+        repeat(count - 1) { index ->
+
+            val row = LinearLayout(this)
+
+            row.orientation =
+                LinearLayout.HORIZONTAL
+
+            val label = TextView(this)
+
+            label.text = "Intervall ${index + 1}"
+
+            label.layoutParams =
+                LinearLayout.LayoutParams(
+                    250,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+            val slider = Slider(this)
+
+            slider.valueFrom = min.toFloat()
+            slider.valueTo = max.toFloat()
+            slider.stepSize = 1f
+            slider.value = min.toFloat()
+
+            slider.layoutParams =
+                LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+
+            sliders.add(slider)
+
+            row.addView(label)
+            row.addView(slider)
+
+            binding.sliderContainer.addView(row)
+        }
     }
 }

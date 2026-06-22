@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.a26ss_gehoertrainer.data.InstallationIdManager
 import com.example.a26ss_gehoertrainer.data.PreferencesManager
 import com.example.a26ss_gehoertrainer.databinding.ActivityGuessBinding
 import com.example.a26ss_gehoertrainer.logic.Spiellogik
@@ -15,6 +16,8 @@ class GuessActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGuessBinding
 
     private lateinit var spiellogik: Spiellogik
+
+    //private lateinit var midiPlayer: MidiPlayer
 
     private val sliders = mutableListOf<Slider>()
 
@@ -29,6 +32,11 @@ class GuessActivity : AppCompatActivity() {
         val settings =
             PreferencesManager(this).loadSettings()
 
+        val installationId =
+            InstallationIdManager(this).getInstallationId()
+
+        //midiPlayer = MidiPlayer(this)
+
         spiellogik = Spiellogik(settings)
 
         binding.tvRound.text =
@@ -42,7 +50,9 @@ class GuessActivity : AppCompatActivity() {
 
         binding.imgLogo.setOnClickListener {
 
-            spiellogik.abspielen()
+            var toene = spiellogik.getCurrentMidiNotes()
+            //TODO midiplayer wieder reinkommentieren
+            //midiPlayer.play(toene)
         }
 
         binding.btnConfirm.setOnClickListener {
@@ -50,13 +60,29 @@ class GuessActivity : AppCompatActivity() {
             val values =
                 sliders.map { it.value.toInt() }
 
-            spiellogik.raten(values)
+            try {
+                spiellogik.raten(values)
+                currentRound++
+            } catch (e: IllegalArgumentException) {
+                //TODO toast zeigen
+                return@setOnClickListener
+            }
 
             binding.tvCorrect.text =
                 "Correct: ${spiellogik.getC()}"
 
             binding.tvFalse.text =
                 "False: ${spiellogik.getF()}"
+
+
+            if(currentRound > settings.rounds) {
+                var ergebnis = spiellogik.getEndergebnis(installationId)
+                //TODO ergebnis in die sammlung von ergebnissen speichern
+                finish()
+            } else {
+                binding.tvRound.text =
+                    "Runde $currentRound/${settings.rounds}"
+            }
         }
 
         onBackPressedDispatcher.addCallback(this) {

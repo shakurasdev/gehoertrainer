@@ -27,7 +27,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.etId.setText(settings.id)
         binding.sliderRounds.value = settings.rounds.toFloat()
         binding.tvRoundValue.text = settings.rounds.toString()
-        binding.switchBaseTone.isChecked = settings.baseTone
+        binding.switchBaseTone.isChecked = settings.grundtonVariabel
         binding.sliderIntervalMin.value = settings.intervalMin.toFloat()
         binding.sliderIntervalMax.value = settings.intervalMax.toFloat()
         binding.sliderPolyphony.value = settings.polyphony.toFloat()
@@ -57,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
             val newSettings = SettingsModel(
                 id = id,
                 rounds = binding.sliderRounds.value.toInt(),
-                baseTone = binding.switchBaseTone.isChecked,
+                grundtonVariabel = binding.switchBaseTone.isChecked,
                 intervalMin = binding.sliderIntervalMin.value.toInt(),
                 intervalMax = binding.sliderIntervalMax.value.toInt(),
                 polyphony = binding.sliderPolyphony.value.toInt()

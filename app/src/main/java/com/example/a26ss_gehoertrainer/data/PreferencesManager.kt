@@ -14,7 +14,7 @@ class PreferencesManager(context: Context) {
         prefs.edit {
             putString(KEY_ID, settings.id)
                 .putInt(KEY_ROUNDS, settings.rounds)
-                .putBoolean(KEY_BASE_TONE, settings.baseTone)
+                .putBoolean(KEY_BASE_TONE, settings.grundtonVariabel)
                 .putInt(KEY_INTERVAL_MIN, settings.intervalMin)
                 .putInt(KEY_INTERVAL_MAX, settings.intervalMax)
                 .putInt(KEY_POLYPHONY, settings.polyphony)
@@ -26,7 +26,7 @@ class PreferencesManager(context: Context) {
         return SettingsModel(
             id = prefs.getString(KEY_ID, "Keks") ?: "Keks",
             rounds = prefs.getInt(KEY_ROUNDS, 1),
-            baseTone = prefs.getBoolean(KEY_BASE_TONE, false),
+            grundtonVariabel = prefs.getBoolean(KEY_BASE_TONE, false),
 
             intervalMin = prefs.getInt(KEY_INTERVAL_MIN, 1),
             intervalMax = prefs.getInt(KEY_INTERVAL_MAX, 12),

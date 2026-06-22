@@ -15,15 +15,23 @@ class PreferencesManager(context: Context) {
             putString(KEY_ID, settings.id)
                 .putInt(KEY_ROUNDS, settings.rounds)
                 .putBoolean(KEY_BASE_TONE, settings.baseTone)
+                .putInt(KEY_INTERVAL_MIN, settings.intervalMin)
+                .putInt(KEY_INTERVAL_MAX, settings.intervalMax)
+                .putInt(KEY_POLYPHONY, settings.polyphony)
         }
     }
 
     fun loadSettings(): SettingsModel {
 
         return SettingsModel(
-            prefs.getString(KEY_ID, "Keks") ?: "Keks",
-            prefs.getInt(KEY_ROUNDS, 5),
-            prefs.getBoolean(KEY_BASE_TONE, true)
+            id = prefs.getString(KEY_ID, "Keks") ?: "Keks",
+            rounds = prefs.getInt(KEY_ROUNDS, 1),
+            baseTone = prefs.getBoolean(KEY_BASE_TONE, false),
+
+            intervalMin = prefs.getInt(KEY_INTERVAL_MIN, 1),
+            intervalMax = prefs.getInt(KEY_INTERVAL_MAX, 12),
+
+            polyphony = prefs.getInt(KEY_POLYPHONY, 1)
         )
     }
 
@@ -32,5 +40,10 @@ class PreferencesManager(context: Context) {
         private const val KEY_ID = "id"
         private const val KEY_ROUNDS = "rounds"
         private const val KEY_BASE_TONE = "base_tone"
+
+        private const val KEY_INTERVAL_MIN = "interval_min"
+        private const val KEY_INTERVAL_MAX = "interval_max"
+
+        private const val KEY_POLYPHONY = "polyphony"
     }
 }

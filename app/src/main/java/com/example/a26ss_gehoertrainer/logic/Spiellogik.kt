@@ -12,9 +12,14 @@ class Spiellogik {
     private var correct = 0
     private var falseCount = 0
 
-    private val tonShift = 57 //entspricht A3 als byte Grundton
+    private val tonShift = 57 //entspricht A3 als midi Grundton der App
 
     private var currentInterval: List<Int>
+
+    /**
+     * der Abstand vom grundton der App zum Grundton der raterunde
+     */
+    private var currentVariance = 0
 
     private val settings: SettingsModel
 
@@ -31,10 +36,10 @@ class Spiellogik {
      * @return sortierte Liste, elem(0) ist der grundton
      */
     fun newInterval(): List<Int> {
-        val grundton = (if(!settings.grundtonVariabel) 0 else Random.nextInt(-11, 12))
-        val allPossibleValues = (settings.intervalMin + grundton..settings.intervalMax + grundton).toList()
+        currentVariance =(if(!settings.grundtonVariabel) 0 else Random.nextInt(-11, 12))
+        val allPossibleValues = (settings.intervalMin + currentVariance..settings.intervalMax + currentVariance).toList()
         val randomUniqueValues = allPossibleValues.shuffled().take(settings.polyphony - 1)
-        return listOf(grundton) + randomUniqueValues.sorted()
+        return listOf(currentVariance) + randomUniqueValues.sorted()
     }
 
     /**
@@ -68,7 +73,7 @@ class Spiellogik {
 
         val ohneGrundton = currentInterval.drop(1)
 
-        if(intervals.sorted() == ohneGrundton.sorted()) {
+        if(intervals.map { it + currentVariance }.sorted() == ohneGrundton.sorted()) {
             correct++
         } else {
             falseCount++

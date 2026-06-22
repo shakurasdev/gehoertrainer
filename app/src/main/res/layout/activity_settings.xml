@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Einstellungen"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- ID -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/etId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="ID eingeben"/>
+        </LinearLayout>
+
+        <!-- Runden -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Runden"
+                android:textSize="18sp"/>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderRounds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:valueFrom="1"
+                android:valueTo="10"
+                android:stepSize="1"
+                android:value="5"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvRoundValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Grundton -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Grundton"
+                android:textSize="18sp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBaseTone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="Abbrechen"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</ScrollView>

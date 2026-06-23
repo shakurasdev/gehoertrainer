@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.a26ss_gehoertrainer.data.HighscoreManager
 import com.example.a26ss_gehoertrainer.data.InstallationIdManager
 import com.example.a26ss_gehoertrainer.data.PreferencesManager
 import com.example.a26ss_gehoertrainer.databinding.ActivityGuessBinding
@@ -17,6 +18,7 @@ class GuessActivity : AppCompatActivity() {
 
     private lateinit var spiellogik: Spiellogik
 
+    //TODO
     //private lateinit var midiPlayer: MidiPlayer
 
     private val sliders = mutableListOf<Slider>()
@@ -35,6 +37,7 @@ class GuessActivity : AppCompatActivity() {
         val installationId =
             InstallationIdManager(this).getInstallationId()
 
+        //TODO
         //midiPlayer = MidiPlayer(this)
 
         spiellogik = Spiellogik(settings)
@@ -77,7 +80,7 @@ class GuessActivity : AppCompatActivity() {
 
             if(currentRound > settings.rounds) {
                 var ergebnis = spiellogik.getEndergebnis(installationId)
-                //TODO ergebnis in die sammlung von ergebnissen speichern
+                HighscoreManager(this).save(ergebnis)
                 finish()
             } else {
                 binding.tvRound.text =

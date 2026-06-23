@@ -31,7 +31,7 @@ class PreferencesManager(context: Context) {
             intervalMin = prefs.getInt(KEY_INTERVAL_MIN, 1),
             intervalMax = prefs.getInt(KEY_INTERVAL_MAX, 12),
 
-            polyphony = prefs.getInt(KEY_POLYPHONY, 1)
+            polyphony = prefs.getInt(KEY_POLYPHONY, 2)
         )
     }
 

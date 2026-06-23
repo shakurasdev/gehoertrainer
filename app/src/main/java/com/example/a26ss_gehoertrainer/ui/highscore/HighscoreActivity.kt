@@ -2,12 +2,15 @@ package com.example.a26ss_gehoertrainer.ui.highscore
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a26ss_gehoertrainer.data.HighscoreManager
 import com.example.a26ss_gehoertrainer.databinding.ActivityHighscoreBinding
+import com.example.a26ss_gehoertrainer.model.HighscoreFilter
 import com.example.a26ss_gehoertrainer.model.HighscoreRow
 import com.example.a26ss_gehoertrainer.model.SpielergebnisModel
+import com.example.a26ss_gehoertrainer.ui.filter.FilterActivity
 import com.example.a26ss_gehoertrainer.ui.main.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -17,6 +20,23 @@ class HighscoreActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHighscoreBinding
 
+    private var currentFilter: HighscoreFilter? = null
+    private val filterLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+
+            if(result.resultCode == RESULT_OK) {
+
+                currentFilter =
+                    result.data?.getSerializableExtra(
+                        "filter"
+                    ) as? HighscoreFilter
+
+                loadHighscores()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,6 +44,7 @@ class HighscoreActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRecyclerView()
+        binding.tvActiveFilter.text = "kein Filter"
         setupButtons()
     }
 
@@ -89,7 +110,21 @@ class HighscoreActivity : AppCompatActivity() {
 
         binding.btnFilter.setOnClickListener {
 
-            // TODO
+            val intent =
+                Intent(
+                    this,
+                    FilterActivity::class.java
+                )
+
+            currentFilter?.let {
+
+                intent.putExtra(
+                    "filter",
+                    it
+                )
+            }
+
+            filterLauncher.launch(intent)
         }
 
         binding.btnExchange.setOnClickListener {

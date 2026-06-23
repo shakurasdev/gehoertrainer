@@ -2,10 +2,12 @@ package com.example.a26ss_gehoertrainer.ui.highscore
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a26ss_gehoertrainer.data.HighscoreManager
+import com.example.a26ss_gehoertrainer.data.InstallationIdManager
 import com.example.a26ss_gehoertrainer.databinding.ActivityHighscoreBinding
 import com.example.a26ss_gehoertrainer.model.HighscoreFilter
 import com.example.a26ss_gehoertrainer.model.HighscoreRow
@@ -33,6 +35,8 @@ class HighscoreActivity : AppCompatActivity() {
                         "filter"
                     ) as? HighscoreFilter
 
+                updateFilterText()
+
                 loadHighscores()
             }
         }
@@ -44,7 +48,7 @@ class HighscoreActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRecyclerView()
-        binding.tvActiveFilter.text = "kein Filter"
+        updateFilterText()
         setupButtons()
     }
 
@@ -63,6 +67,30 @@ class HighscoreActivity : AppCompatActivity() {
 
     private fun loadHighscores() {
 
+        val installationId =
+            InstallationIdManager(this)
+                .getInstallationId()
+
+        var results =
+            HighscoreManager(this)
+                .load()
+
+        currentFilter?.let { filter ->
+
+            results =
+                results.filter {
+
+                    it.rounds == filter.rounds &&
+                            it.baseTone == filter.baseTone &&
+                            it.intervalMin == filter.intervalMin &&
+                            it.intervalMax == filter.intervalMax &&
+                            it.polyphon == filter.polyphony && (
+                                !filter.ownIdOnly ||
+                                it.deviceId == installationId
+                            )
+                }
+        }
+
         val formatter =
             SimpleDateFormat(
                 "yy/MM/dd",
@@ -70,8 +98,7 @@ class HighscoreActivity : AppCompatActivity() {
             )
 
         val rows =
-            HighscoreManager(this)
-                .load()
+            results
                 .sortedWith(
                     compareByDescending<SpielergebnisModel> {
                         it.correct.toDouble() / it.rounds
@@ -128,8 +155,12 @@ class HighscoreActivity : AppCompatActivity() {
         }
 
         binding.btnExchange.setOnClickListener {
-
-            // TODO
+            //TODO implementieren
+            Toast.makeText(
+                this,
+                "Noch nicht implementiert",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.btnMainMenu.setOnClickListener {
@@ -145,6 +176,25 @@ class HighscoreActivity : AppCompatActivity() {
                         Intent.FLAG_ACTIVITY_CLEAR_TASK
 
             startActivity(intent)
+        }
+    }
+
+    private fun updateFilterText() {
+
+        currentFilter?.let {
+
+            binding.tvActiveFilter.text =
+                "G: ${
+                    if(it.baseTone) "V" else "F"
+                } | min: ${it.intervalMin}" +
+                        " | max: ${it.intervalMax}" +
+                        " | poly: ${it.polyphony}" +
+                        " | #: ${it.rounds}"
+
+        } ?: run {
+
+            binding.tvActiveFilter.text =
+                "kein Filter"
         }
     }
 }

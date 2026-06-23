@@ -12,8 +12,6 @@ class Spiellogik {
     private var correct = 0
     private var falseCount = 0
 
-    private val tonShift = 28 //28 entspricht C3 als piano Grundton der App (wäre 48 in Midi https://inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)
-
     private var currentInterval: List<Int>
 
     /**
@@ -44,9 +42,9 @@ class Spiellogik {
 
     /**
      * liefert die numerischen Werte des aktuellen intervalls einschließlich grundton an erster stelle,
-     * erhöht um this.tonShift für Midi Abspielen
+     * erhöht um tonShift für das gewünschte TonabspielDevice
      */
-    fun getCurrentMidiNotes(): List<Int> {
+    fun getCurrentMidiNotes(tonShift: Int): List<Int> {
         return currentInterval.map { it + tonShift }
     }
 

@@ -51,8 +51,11 @@ class GuessActivity : AppCompatActivity() {
         )
 
         binding.imgLogo.setOnClickListener {
+            //28 entspricht C3 als piano Grundton der App
+            // (wäre 48 in Midi https://inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)
+            val tonShift = 28
 
-            val toene = spiellogik.getCurrentMidiNotes()
+            val toene = spiellogik.getCurrentMidiNotes(tonShift)
             soundpoolDevice.play(toene)
         }
 

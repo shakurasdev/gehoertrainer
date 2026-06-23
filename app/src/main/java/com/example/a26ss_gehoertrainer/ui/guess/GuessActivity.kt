@@ -5,7 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.example.a26ss_gehoertrainer.audio.MidiPlayer
+import com.example.a26ss_gehoertrainer.audio.SoundpoolDevice
 import com.example.a26ss_gehoertrainer.data.HighscoreManager
 import com.example.a26ss_gehoertrainer.data.InstallationIdManager
 import com.example.a26ss_gehoertrainer.data.PreferencesManager
@@ -19,7 +19,7 @@ class GuessActivity : AppCompatActivity() {
 
     private lateinit var spiellogik: Spiellogik
 
-    private lateinit var midiPlayer: MidiPlayer
+    private lateinit var soundpoolDevice: SoundpoolDevice
 
     private val sliders = mutableListOf<Slider>()
 
@@ -37,7 +37,7 @@ class GuessActivity : AppCompatActivity() {
         val installationId =
             InstallationIdManager(this).getInstallationId()
 
-        midiPlayer = MidiPlayer(this)
+        soundpoolDevice = SoundpoolDevice(this)
 
         spiellogik = Spiellogik(settings)
 
@@ -53,7 +53,7 @@ class GuessActivity : AppCompatActivity() {
         binding.imgLogo.setOnClickListener {
 
             val toene = spiellogik.getCurrentMidiNotes()
-            midiPlayer.play(toene)
+            soundpoolDevice.play(toene)
         }
 
         binding.btnConfirm.setOnClickListener {
@@ -139,7 +139,7 @@ class GuessActivity : AppCompatActivity() {
 
     override fun onDestroy() {
 
-        midiPlayer.release()
+        soundpoolDevice.cleanup()
 
         super.onDestroy()
     }

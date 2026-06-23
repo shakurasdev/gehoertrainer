@@ -10,9 +10,9 @@ import android.os.Looper
  * erlaubt das Abspielen von audio samples mit numerischen Werten 17 bis 63
  * (28 entspricht C3)
  */
-class MidiPlayer(
+class SoundpoolDevice (
     private val context: Context
-) {
+) : TonabspielDevice {
 
     private val soundPool: SoundPool
 
@@ -60,14 +60,15 @@ class MidiPlayer(
         }
     }
 
-    fun play(notes: List<Int>) {
+    override fun play(notes: List<Int>) {
+        val playableNotes = filterPlayableNotes(17, 63, notes)
 
         handler.removeCallbacksAndMessages(null)
 
         val noteDuration = 1000L
         val pauseDuration = 250L
 
-        notes.forEachIndexed { index, note ->
+        playableNotes.forEachIndexed { index, note ->
 
             val delay =
                 index * (noteDuration + pauseDuration)
@@ -80,11 +81,11 @@ class MidiPlayer(
         }
 
         val chordDelay =
-            notes.size * (noteDuration + pauseDuration)
+            playableNotes.size * (noteDuration + pauseDuration)
 
         handler.postDelayed({
 
-            notes.forEach { note ->
+            playableNotes.forEach { note ->
                 playSingle(note)
             }
 
@@ -106,7 +107,7 @@ class MidiPlayer(
         }
     }
 
-    fun release() {
+    override fun cleanup() {
         soundPool.release()
     }
 }

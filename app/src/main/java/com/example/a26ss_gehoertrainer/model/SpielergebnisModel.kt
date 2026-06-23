@@ -8,5 +8,6 @@ data class SpielergebnisModel(
     val intervalMax: Int,
     val polyphon: Int,
     val deviceId: String,
-    val correct: Int
+    val correct: Int,
+    val timestamp: Long
 )

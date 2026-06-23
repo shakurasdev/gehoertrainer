@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a26ss_gehoertrainer.databinding.ItemHighscoreBinding
+import com.example.a26ss_gehoertrainer.model.HighscoreRow
 import com.example.a26ss_gehoertrainer.model.SpielergebnisModel
 
 class HighscoreAdapter(
-    private val items: List<SpielergebnisModel>
+    private val items: List<HighscoreRow>
 ) : RecyclerView.Adapter<HighscoreAdapter.ViewHolder>() {
 
     class ViewHolder(
@@ -36,12 +37,20 @@ class HighscoreAdapter(
 
         val item = items[position]
 
-        holder.binding.tvId.text = item.playerId
-        holder.binding.tvRounds.text =
-            item.rounds.toString()
+        holder.binding.tvPlace.text =
+            item.place.toString()
 
-        holder.binding.tvBaseTone.text =
-            if (item.baseTone) "Ja" else "Nein"
+        holder.binding.tvPercent.text =
+            "${item.percent}%"
+
+        holder.binding.tvDate.text =
+            item.date
+
+        holder.binding.tvPlayerId.text =
+            item.playerId
+
+        holder.binding.tvInstallationId.text =
+            item.installationId
     }
 
     override fun getItemCount() = items.size

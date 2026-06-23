@@ -99,7 +99,8 @@ class Spiellogik {
             settings.intervalMax,
             settings.polyphony,
             installationId,
-            correct
+            correct,
+            System.currentTimeMillis()
             )
     }
 }

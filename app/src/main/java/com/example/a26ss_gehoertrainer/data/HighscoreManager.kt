@@ -34,6 +34,7 @@ class HighscoreManager(context: Context) {
             obj.put("polyphon", it.polyphon)
             obj.put("deviceId", it.deviceId)
             obj.put("correct", it.correct)
+            obj.put("timestamp", it.timestamp)
 
             jsonArray.put(obj)
         }
@@ -65,7 +66,8 @@ class HighscoreManager(context: Context) {
                     obj.getInt("intervalMax"),
                     obj.getInt("polyphon"),
                     obj.getString("deviceId"),
-                    obj.getInt("correct")
+                    obj.getInt("correct"),
+                    obj.getLong("timestamp")
                 )
             )
         }

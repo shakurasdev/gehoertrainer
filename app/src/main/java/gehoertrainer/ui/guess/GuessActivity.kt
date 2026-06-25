@@ -3,6 +3,7 @@ package gehoertrainer.ui.guess
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import de.htw.gehoertrainer.databinding.ActivityGuessBinding
@@ -67,7 +68,11 @@ class GuessActivity : AppCompatActivity() {
                 spiellogik.raten(values)
                 currentRound++
             } catch (e: IllegalArgumentException) {
-                //TODO toast zeigen
+                Toast.makeText(
+                    this,
+                    "Sie haben irgendwie geschafft, unmögliche Werte zu schicken",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 

@@ -9,11 +9,13 @@ interface IBluetoothManager {
 
     /**
      * verbindung aufbauen
+     * @throws RuntimeException wenn Verbindungsprobleme bestehen
      */
     fun connect()
 
     /**
      * ergebnisse austauschen
+     * @throws RuntimeException wenn erhaltene Daten fehlerhaft sind
      */
     fun exchangeResults(results: List<SpielergebnisModel>)
 

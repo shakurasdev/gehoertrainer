@@ -7,15 +7,15 @@
         android:label="Gehörtrainer"
         android:supportsRtl="true"
         android:theme="@style/Theme.A26SS_Gehoertrainer">
-        <activity android:name=".ui.highscore.HighscoreActivity" />
-        <activity android:name=".ui.guess.GuessActivity" />
-        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name="gehoertrainer.ui.highscore.HighscoreActivity" />
+        <activity android:name="gehoertrainer.ui.guess.GuessActivity" />
+        <activity android:name="gehoertrainer.ui.settings.SettingsActivity" />
         <activity
-            android:name=".ui.filter.FilterActivity"
+            android:name="gehoertrainer.ui.filter.FilterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="gehoertrainer.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

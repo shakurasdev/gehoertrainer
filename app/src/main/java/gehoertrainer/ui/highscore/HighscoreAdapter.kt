@@ -3,7 +3,7 @@ package gehoertrainer.ui.highscore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.schmidt.a26ss_gehoertrainer.databinding.ItemHighscoreBinding
+import de.htw.gehoertrainer.databinding.ItemHighscoreBinding
 import gehoertrainer.model.HighscoreRow
 
 class HighscoreAdapter(

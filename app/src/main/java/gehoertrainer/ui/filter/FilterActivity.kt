@@ -3,7 +3,7 @@ package gehoertrainer.ui.filter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.schmidt.a26ss_gehoertrainer.databinding.ActivityFilterBinding
+import de.htw.gehoertrainer.databinding.ActivityFilterBinding
 import gehoertrainer.model.HighscoreFilter
 
 class FilterActivity : AppCompatActivity() {

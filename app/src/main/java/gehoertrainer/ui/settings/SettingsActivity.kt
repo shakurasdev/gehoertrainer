@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.schmidt.a26ss_gehoertrainer.databinding.ActivitySettingsBinding
+import de.htw.gehoertrainer.databinding.ActivitySettingsBinding
 import gehoertrainer.controller.data.PreferencesRepository
 import gehoertrainer.model.SettingsModel
 import gehoertrainer.ui.guess.GuessActivity

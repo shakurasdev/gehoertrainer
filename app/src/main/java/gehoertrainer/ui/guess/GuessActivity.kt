@@ -5,7 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.schmidt.a26ss_gehoertrainer.databinding.ActivityGuessBinding
+import de.htw.gehoertrainer.databinding.ActivityGuessBinding
 import com.google.android.material.slider.Slider
 import gehoertrainer.controller.data.InstallationIdManager
 import gehoertrainer.controller.data.PreferencesRepository

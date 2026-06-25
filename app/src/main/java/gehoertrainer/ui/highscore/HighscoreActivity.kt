@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.schmidt.a26ss_gehoertrainer.databinding.ActivityHighscoreBinding
+import de.htw.gehoertrainer.databinding.ActivityHighscoreBinding
 import gehoertrainer.controller.data.InstallationIdManager
 import gehoertrainer.controller.data.SpielergebnisRepository
 import gehoertrainer.model.HighscoreFilter

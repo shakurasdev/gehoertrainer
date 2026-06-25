@@ -3,7 +3,7 @@ package gehoertrainer.ui.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.schmidt.a26ss_gehoertrainer.databinding.ActivityMainBinding
+import de.htw.gehoertrainer.databinding.ActivityMainBinding
 import gehoertrainer.ui.highscore.HighscoreActivity
 import gehoertrainer.ui.settings.SettingsActivity
 

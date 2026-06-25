@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "gehoertrainer"
+    namespace = "de.htw.gehoertrainer"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "gehoertrainer"
+        applicationId = "de.htw.gehoertrainer"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

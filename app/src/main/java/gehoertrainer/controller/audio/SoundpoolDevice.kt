@@ -1,4 +1,4 @@
-package gehoertrainer.service.audio
+package gehoertrainer.controller.audio
 
 import android.content.Context
 import android.media.AudioAttributes

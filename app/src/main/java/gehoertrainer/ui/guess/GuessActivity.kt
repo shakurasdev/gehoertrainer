@@ -12,8 +12,8 @@ import gehoertrainer.controller.data.PreferencesRepository
 import gehoertrainer.controller.data.SpielergebnisRepository
 import gehoertrainer.controller.logic.ISpiellogik
 import gehoertrainer.controller.logic.Spiellogik
-import gehoertrainer.service.audio.IAudioDevice
-import gehoertrainer.service.audio.SoundpoolDevice
+import gehoertrainer.controller.audio.IAudioDevice
+import gehoertrainer.controller.audio.SoundpoolDevice
 
 class GuessActivity : AppCompatActivity() {
 

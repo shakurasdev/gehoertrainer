@@ -1,4 +1,4 @@
-package gehoertrainer.service.audio
+package gehoertrainer.controller.audio
 
 /**
  * eine Schnittstelle, die das Abspielen von gewählten Tönen erlaubt.

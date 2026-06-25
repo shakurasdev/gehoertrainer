@@ -1,4 +1,4 @@
-package gehoertrainer.service.audio
+package gehoertrainer.controller.audio
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -86,6 +86,11 @@ class GuessActivity : AppCompatActivity() {
             if(currentRound > settings.rounds) {
                 var ergebnis = spiellogik.getEndergebnis(installationId)
                 SpielergebnisRepository(this).save(ergebnis)
+                Toast.makeText(
+                    this,
+                    "Raten abgeschlossen mit C: ${ergebnis.correct}, F: ${ergebnis.rounds - ergebnis.correct}",
+                    Toast.LENGTH_LONG
+                ).show()
                 finish()
             } else {
                 binding.tvRound.text =
@@ -117,7 +122,7 @@ class GuessActivity : AppCompatActivity() {
 
             label.layoutParams =
                 LinearLayout.LayoutParams(
-                    250,
+                    200,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
 
@@ -137,8 +142,21 @@ class GuessActivity : AppCompatActivity() {
 
             sliders.add(slider)
 
+            val labelSliderValue = TextView(this)
+            labelSliderValue.text = slider.valueFrom.toInt().toString()
+            labelSliderValue.layoutParams =
+                LinearLayout.LayoutParams(
+                    35,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            slider.addOnChangeListener { _, value, _ ->
+                labelSliderValue.text = value.toInt().toString()
+            }
+
+
             row.addView(label)
             row.addView(slider)
+            row.addView(labelSliderValue)
 
             binding.sliderContainer.addView(row)
         }
